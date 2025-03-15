@@ -51,7 +51,7 @@ public class Day6 extends DaySolver {
         for (int r = 0; r < grid.length; r++){
             System.arraycopy(grid[r], 0, newGrid[r], 0, grid[0].length);
         }
-        newGrid[obstacle.getY()][obstacle.getX()] = '#';
+        newGrid[obstacle.y()][obstacle.x()] = '#';
         Guard test = new Guard(startingLoc, newGrid);
         HashSet<String> locDirPairs = new HashSet<>();
         while (test.isOnMappedArea()){

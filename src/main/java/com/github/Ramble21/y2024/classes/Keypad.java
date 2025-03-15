@@ -107,8 +107,8 @@ public class Keypad {
             return routes;
         }
         String moves = (
-                (end.getX() - start.getX() > 0 ? ">" : "<").repeat(Math.max(0, Math.abs(end.getX() - start.getX()))) +
-                (end.getY() - start.getY() > 0 ? "v" : "^").repeat(Math.max(0, Math.abs(end.getY() - start.getY())))
+                (end.x() - start.x() > 0 ? ">" : "<").repeat(Math.max(0, Math.abs(end.x() - start.x()))) +
+                (end.y() - start.y() > 0 ? "v" : "^").repeat(Math.max(0, Math.abs(end.y() - start.y())))
         );
         HashSet<String> routes = permute(moves, start, isDirectional);
         return new HashSet<>(routes.stream().map(route -> route + "A").toList());
@@ -138,7 +138,7 @@ public class Keypad {
         char[][] keypad = isDirectional ? directionalKeypad : numericKeypad;
         HashSet<Location> locs = getLocationsAlongRoute(start, route);
         for (Location loc : locs){
-            if (!loc.isOnGrid(keypad) || keypad[loc.getY()][loc.getX()] == '#'){
+            if (!loc.isOnGrid(keypad) || keypad[loc.y()][loc.x()] == '#'){
                 return false;
             }
         }
@@ -146,12 +146,12 @@ public class Keypad {
     }
     private static HashSet<Location> getLocationsAlongRoute(Location start, String route) {
         HashSet<Location> locations = new HashSet<>();
-        locations.add(new Location(start.getX(), start.getY()));
-        Location current = new Location(start.getX(), start.getY());
+        locations.add(new Location(start.x(), start.y()));
+        Location current = new Location(start.x(), start.y());
         for (char move : route.toCharArray()) {
             if (move == 'A') break;
             current = current.getDirectionalLoc(Direction.charToDir(move));
-            locations.add(new Location(current.getX(), current.getY()));
+            locations.add(new Location(current.x(), current.y()));
         }
         return locations;
     }

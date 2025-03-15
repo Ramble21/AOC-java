@@ -55,8 +55,8 @@ public class Day12 extends DaySolver {
         return count;
     }
     public void getRegion(Location loc, char target){
-        Location[] possiblePaths = possiblePaths(loc.getY(), loc.getX());
-        if (grid[loc.getY()][loc.getX()] == target) currentRegion.add(loc);
+        Location[] possiblePaths = possiblePaths(loc.y(), loc.x());
+        if (grid[loc.y()][loc.x()] == target) currentRegion.add(loc);
         if (possiblePaths == null) return;
         for (Location path : possiblePaths){
             if (!currentRegion.contains(path)) getRegion(path, target);
@@ -66,10 +66,10 @@ public class Day12 extends DaySolver {
         int count = 0;
         for (Location l : currentRegion){
             int x = 4;
-            if (currentRegion.contains(new Location(l.getX()+1, l.getY()))) x--;
-            if (currentRegion.contains(new Location(l.getX()-1, l.getY()))) x--;
-            if (currentRegion.contains(new Location(l.getX(), l.getY()+1))) x--;
-            if (currentRegion.contains(new Location(l.getX(), l.getY()-1))) x--;
+            if (currentRegion.contains(new Location(l.x()+1, l.y()))) x--;
+            if (currentRegion.contains(new Location(l.x()-1, l.y()))) x--;
+            if (currentRegion.contains(new Location(l.x(), l.y()+1))) x--;
+            if (currentRegion.contains(new Location(l.x(), l.y()-1))) x--;
             count += x;
         }
         return count;
@@ -83,14 +83,14 @@ public class Day12 extends DaySolver {
     }
     private int countCorners(Location loc) {
         int corners = 0;
-        Location upper = new Location(loc.getX(), loc.getY() - 1);
-        Location lower = new Location(loc.getX(), loc.getY() + 1);
-        Location right = new Location(loc.getX() + 1, loc.getY());
-        Location left = new Location(loc.getX() - 1, loc.getY());
-        Location topLeft = new Location(loc.getX() - 1, loc.getY() - 1);
-        Location topRight = new Location(loc.getX() + 1, loc.getY() - 1);
-        Location bottomLeft = new Location(loc.getX() - 1, loc.getY() + 1);
-        Location bottomRight = new Location(loc.getX() + 1, loc.getY() + 1);
+        Location upper = new Location(loc.x(), loc.y() - 1);
+        Location lower = new Location(loc.x(), loc.y() + 1);
+        Location right = new Location(loc.x() + 1, loc.y());
+        Location left = new Location(loc.x() - 1, loc.y());
+        Location topLeft = new Location(loc.x() - 1, loc.y() - 1);
+        Location topRight = new Location(loc.x() + 1, loc.y() - 1);
+        Location bottomLeft = new Location(loc.x() - 1, loc.y() + 1);
+        Location bottomRight = new Location(loc.x() + 1, loc.y() + 1);
         if (!currentRegion.contains(upper) && !currentRegion.contains(left)) {
             corners++;
         }

@@ -25,7 +25,7 @@ public class Guard {
     public void move(){
         Location inFront = currentLoc.getDirectionalLoc(currentDir);
         if (!inFront.isOnGrid(grid)) isOnMappedArea = false;
-        else if (grid[inFront.getY()][inFront.getX()] != '#'){
+        else if (grid[inFront.y()][inFront.x()] != '#'){
             currentLoc = inFront;
         }
         else currentDir = currentDir.getClockwise();

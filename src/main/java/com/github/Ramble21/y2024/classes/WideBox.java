@@ -14,15 +14,15 @@ public class WideBox {
         return index1;
     }
     public int getY(){
-        return index1.getY();
+        return index1.y();
     }
     public static void resetBoxesPushed(){
         boxesPushed.clear();
     }
 
     public WideBox(char[][] grid, Location index1, Location index2){
-        char char1 = grid[index1.getY()][index1.getX()];
-        char char2 = grid[index2.getY()][index2.getX()];
+        char char1 = grid[index1.y()][index1.x()];
+        char char2 = grid[index2.y()][index2.x()];
         if (char1 == '[' && char2 == ']'){
             this.index1 = index1;
             this.index2 = index2;
@@ -36,17 +36,17 @@ public class WideBox {
         }
     }
     public void forceMove (Direction dir, char[][] grid){
-        grid[index1.getY()][index1.getX()] = '.';
-        grid[index2.getY()][index2.getX()] = '.';
-        grid[index1.getY()+dir.getDeltaY()][index1.getX()+dir.getDeltaX()] = '[';
-        grid[index2.getY()+dir.getDeltaY()][index2.getX()+dir.getDeltaX()] = ']';
+        grid[index1.y()][index1.x()] = '.';
+        grid[index2.y()][index2.x()] = '.';
+        grid[index1.y()+dir.getDeltaY()][index1.x()+dir.getDeltaX()] = '[';
+        grid[index2.y()+dir.getDeltaY()][index2.x()+dir.getDeltaX()] = ']';
         boxesPushed.add(this);
     }
     public void undoForceMove (Direction dir, char[][] grid){
-        grid[index1.getY()+dir.getDeltaY()][index1.getX()+dir.getDeltaX()] = '.';
-        grid[index2.getY()+dir.getDeltaY()][index2.getX()+dir.getDeltaX()] = '.';
-        grid[index1.getY()][index1.getX()] = '[';
-        grid[index2.getY()][index2.getX()] = ']';
+        grid[index1.y()+dir.getDeltaY()][index1.x()+dir.getDeltaX()] = '.';
+        grid[index2.y()+dir.getDeltaY()][index2.x()+dir.getDeltaX()] = '.';
+        grid[index1.y()][index1.x()] = '[';
+        grid[index2.y()][index2.x()] = ']';
     }
     public void undoAllMistakes(Direction dir, char[][] grid){
         for (int i = boxesPushed.size()-1; i >= 0; i--){
@@ -60,11 +60,11 @@ public class WideBox {
         if (dir == Direction.RIGHT || dir == Direction.LEFT){
             Location target = target1;
             if (dir == Direction.RIGHT) target = target2;
-            if (grid[target.getY()][target.getX()] == '.'){
+            if (grid[target.y()][target.x()] == '.'){
                 forceMove(dir, grid);
                 return true;
             }
-            else if (grid[target.getY()][target.getX()] == '#'){
+            else if (grid[target.y()][target.x()] == '#'){
                 undoAllMistakes(dir, grid);
                 return false;
             }
@@ -83,11 +83,11 @@ public class WideBox {
             }
         }
         else{
-            if (grid[target1.getY()][target1.getX()] == '.' && grid[target2.getY()][target2.getX()] == '.'){
+            if (grid[target1.y()][target1.x()] == '.' && grid[target2.y()][target2.x()] == '.'){
                 forceMove(dir, grid);
                 return true;
             }
-            else if (grid[target1.getY()][target1.getX()] == '#' || grid[target2.getY()][target2.getX()] == '#'){
+            else if (grid[target1.y()][target1.x()] == '#' || grid[target2.y()][target2.x()] == '#'){
                 undoAllMistakes(dir, grid);
                 return false;
             }
@@ -108,9 +108,9 @@ public class WideBox {
     }
 
     public static WideBox grabBox(char[][] grid, Location loc){
-        char middle = grid[loc.getY()][loc.getX()];
-        char left = grid[loc.getY()][loc.getX()-1];
-        char right = grid[loc.getY()][loc.getX()+1];
+        char middle = grid[loc.y()][loc.x()];
+        char left = grid[loc.y()][loc.x()-1];
+        char right = grid[loc.y()][loc.x()+1];
         if (middle == '[' && right == ']'){
             return new WideBox(grid, loc, loc.getDirectionalLoc(Direction.RIGHT));
         }

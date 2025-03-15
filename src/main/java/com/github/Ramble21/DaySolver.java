@@ -27,7 +27,14 @@ public abstract class DaySolver {
                 Objects.requireNonNull(Main.class.getResourceAsStream(getInputFilePath(year, dayNumber)))
         )).lines().toList();
     }
-
+    public static char[][] getInputAsGrid(int year, int dayNumber) throws IOException {
+        List<String> input = getInputLines(year, dayNumber);
+        char[][] output = new char[input.size()][input.get(0).length()];
+        for (int i = 0; i < output.length; i++){
+            output[i] = input.get(i).toCharArray();
+        }
+        return output;
+    }
     public static void print2DArr(char[][] array) {
         for (char[] row : array) {
             System.out.println(row);

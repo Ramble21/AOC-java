@@ -52,8 +52,8 @@ public class Day10 extends DaySolver {
         grid = g;
     }
     public void dfsPath(Location position, HashSet<Location> completedPaths){
-        Location[] paths = possiblePaths(position.getY(), position.getX());
-        if (grid[position.getY()][position.getX()] == 9) completedPaths.add(position);
+        Location[] paths = possiblePaths(position.y(), position.x());
+        if (grid[position.y()][position.x()] == 9) completedPaths.add(position);
         if (paths == null){
             return;
         }
@@ -62,8 +62,8 @@ public class Day10 extends DaySolver {
         }
     }
     public void dfsPathTwo(Location position, ArrayList<Location> completedPaths){
-        Location[] paths = possiblePaths(position.getY(), position.getX());
-        if (grid[position.getY()][position.getX()] == 9) completedPaths.add(position);
+        Location[] paths = possiblePaths(position.y(), position.x());
+        if (grid[position.y()][position.x()] == 9) completedPaths.add(position);
         if (paths == null){
             return;
         }

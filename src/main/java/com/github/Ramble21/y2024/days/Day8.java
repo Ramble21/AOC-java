@@ -71,24 +71,24 @@ public class Day8 extends DaySolver {
                     for (Location potential : potentialAntinodes){
                         if (potential != null){
                             set.add(potential);
-                            if (grid[potential.getY()][potential.getX()] == '.') grid[potential.getY()][potential.getX()] = '#';
-                            else if (grid[potential.getY()][potential.getX()] != '#') grid[potential.getY()][potential.getX()] = '%';
+                            if (grid[potential.y()][potential.x()] == '.') grid[potential.y()][potential.x()] = '#';
+                            else if (grid[potential.y()][potential.x()] != '#') grid[potential.y()][potential.x()] = '%';
                         }
                     }
                 }
             }
         }
         ArrayList<Location> x = new ArrayList<>(set);
-        x.sort(Comparator.comparing(Location::getY));
+        x.sort(Comparator.comparing(Location::y));
         return set.size();
     }
 
     public Location[] getAntinodes(Location loc1, Location loc2){
         Location[] antinodes = new Location[2];
-        int xDiff = loc1.getX() - loc2.getX();
-        int yDiff = loc2.getY() - loc1.getY();
-        antinodes[0] = new Location(loc1.getX()-2*xDiff, loc1.getY()+2*yDiff);
-        antinodes[1] = new Location(loc2.getX()+2*xDiff, loc2.getY()-2*yDiff);
+        int xDiff = loc1.x() - loc2.x();
+        int yDiff = loc2.y() - loc1.y();
+        antinodes[0] = new Location(loc1.x()-2*xDiff, loc1.y()+2*yDiff);
+        antinodes[1] = new Location(loc2.x()+2*xDiff, loc2.y()-2*yDiff);
         for (int i = 0; i < antinodes.length; i++){
             assert antinodes[i] != null;
             if (!antinodes[i].isOnGrid(grid)){
@@ -101,12 +101,12 @@ public class Day8 extends DaySolver {
         Location[] antinodes = new Location[100];
         antinodes[0] = loc1;
         antinodes[1] = loc2;
-        int xDiff = loc1.getX() - loc2.getX();
-        int yDiff = loc2.getY() - loc1.getY();
+        int xDiff = loc1.x() - loc2.x();
+        int yDiff = loc2.y() - loc1.y();
         int times = 2;
         for (int i = 2; i < antinodes.length; i+=2){
-            antinodes[i] = new Location(loc1.getX()-times*xDiff, loc1.getY()+times*yDiff);
-            antinodes[i+1] = new Location(loc2.getX()+times*xDiff, loc2.getY()-times*yDiff);
+            antinodes[i] = new Location(loc1.x()-times*xDiff, loc1.y()+times*yDiff);
+            antinodes[i+1] = new Location(loc2.x()+times*xDiff, loc2.y()-times*yDiff);
             times++;
         }
 

@@ -34,7 +34,7 @@ public class Day18 extends DaySolver {
             addLocations(mid);
             BreadthFirstSearch search = new BreadthFirstSearch(new Location(0, 0), new Location(gridSize-1, gridSize-1), grid);
             if (isFirstBadSearch(search, mid)){
-                goal = coords.get(mid - 1).getX() + "," + coords.get(mid - 1).getY();
+                goal = coords.get(mid - 1).x() + "," + coords.get(mid - 1).y();
                 break;
             }
             else if (search.isNoSolution()){
@@ -80,7 +80,7 @@ public class Day18 extends DaySolver {
             }
         }
         for (int i = 0; i < count; i++){
-            grid[coords.get(i).getY()][coords.get(i).getX()] = '#';
+            grid[coords.get(i).y()][coords.get(i).x()] = '#';
         }
     }
 }

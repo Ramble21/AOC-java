@@ -54,13 +54,13 @@ public class Day20 extends DaySolver {
     }
     private HashSet<Location> getPossibleCheatJumps(Location center, int maxPS) {
         HashSet<Location> result = new HashSet<>();
-        for (int r = center.getY() - maxPS; r <= center.getY() + maxPS; r++){
+        for (int r = center.y() - maxPS; r <= center.y() + maxPS; r++){
             if (r >= grid.length) break;
             if (r < 0){
                 r = -1;
                 continue;
             }
-            for (int c = center.getX() - maxPS; c <= center.getX() + maxPS; c++){
+            for (int c = center.x() - maxPS; c <= center.x() + maxPS; c++){
                 if (c >= grid[0].length) continue;
                 if (Location.getTaxicabDistance(new Location(c, r), center) > maxPS) continue;
                 if (c < 0){

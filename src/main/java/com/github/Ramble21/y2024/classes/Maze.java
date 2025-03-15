@@ -61,9 +61,9 @@ public class Maze {
         }
         if (locs.contains(node.getLoc())) return;
 
-        grid[currentLoc.getY()][currentLoc.getX()] = 'x';
+        grid[currentLoc.y()][currentLoc.x()] = 'x';
         currentLoc = node.getLoc();
-        grid[currentLoc.getY()][currentLoc.getX()] = '@';
+        grid[currentLoc.y()][currentLoc.x()] = '@';
         checkNeighbors(node);
         visited.add(node);
     }
@@ -79,7 +79,7 @@ public class Maze {
             if (tentativeDistance < neighbor.getDistance()){
                 neighbor.setDistance(tentativeDistance);
                 if (!queue.contains(neighbor)) queue.add(neighbor);
-                if (grid[neighbor.getLoc().getY()][neighbor.getLoc().getX()] == 'E') {
+                if (grid[neighbor.getLoc().y()][neighbor.getLoc().x()] == 'E') {
                     finalNode = neighbor;
                     totalPoints = neighbor.getDistance();
                 }
@@ -89,10 +89,10 @@ public class Maze {
 
     public ArrayList<Location> getAllLocationsBetween(Location start, Location end) {
         ArrayList<Location> locations = new ArrayList<>();
-        int x1 = start.getX();
-        int y1 = start.getY();
-        int x2 = end.getX();
-        int y2 = end.getY();
+        int x1 = start.x();
+        int y1 = start.y();
+        int x2 = end.x();
+        int y2 = end.y();
         int dx = Integer.compare(x2, x1);
         int dy = Integer.compare(y2, y1);
         int currentX = x1;
@@ -108,17 +108,17 @@ public class Maze {
     public int getEdgeWeight(MazeNode node1, MazeNode node2){
         Location loc1 = node1.getLoc();
         Location loc2 = node2.getLoc();
-        if (loc1.getX() == loc2.getX()){
-            return Math.abs(loc1.getY() - loc2.getY());
+        if (loc1.x() == loc2.x()){
+            return Math.abs(loc1.y() - loc2.y());
         }
-        else if (loc1.getY() == loc2.getY()){
-            return Math.abs(loc2.getX() - loc1.getX());
+        else if (loc1.y() == loc2.y()){
+            return Math.abs(loc2.x() - loc1.x());
         }
         else throw new RuntimeException("Nodes " + node1 + " and " + node2 + " cannot be compared!");
     }
     public Direction getDirectionToGo(Location original, Location neighbor) throws RuntimeException{
-        int dx = neighbor.getX() - original.getX();
-        int dy = neighbor.getY() - original.getY();
+        int dx = neighbor.x() - original.x();
+        int dy = neighbor.y() - original.y();
         if (dx > 0) return Direction.RIGHT;
         if (dx < 0) return Direction.LEFT;
         if (dy > 0) return Direction.DOWN;
@@ -132,11 +132,11 @@ public class Maze {
             while (true) {
                 Location newLoc = loc.getDirectionalLoc(direction);
                 Direction dir = getDirectionToGo(loc, newLoc);
-                if (grid[newLoc.getY()][newLoc.getX()] == 'E'){
+                if (grid[newLoc.y()][newLoc.x()] == 'E'){
                     output.add(new MazeNode(newLoc, current, getNodeDirections(newLoc), dir));
                     break;
                 }
-                else if (grid[newLoc.getY()][newLoc.getX()] == '#' || isDeadEnd(newLoc, direction)){
+                else if (grid[newLoc.y()][newLoc.x()] == '#' || isDeadEnd(newLoc, direction)){
                     break;
                 }
                 else if (canTurn(newLoc)) {
@@ -150,20 +150,20 @@ public class Maze {
     }
     public boolean canMoveForward(Location currentLoc, Direction currentDir){
         Location targetLoc = currentLoc.getDirectionalLoc(currentDir);
-        return grid[targetLoc.getY()][targetLoc.getX()] == '.' || grid[targetLoc.getY()][targetLoc.getX()] == 'E';
+        return grid[targetLoc.y()][targetLoc.x()] == '.' || grid[targetLoc.y()][targetLoc.x()] == 'E';
     }
     public boolean canTurnClockwise(Location currentLoc, Direction currentDir){
         Location targetLoc = currentLoc.getDirectionalLoc(currentDir.getClockwise());
-        return grid[targetLoc.getY()][targetLoc.getX()] == '.' || grid[targetLoc.getY()][targetLoc.getX()] == 'E';
+        return grid[targetLoc.y()][targetLoc.x()] == '.' || grid[targetLoc.y()][targetLoc.x()] == 'E';
     }
     public boolean canTurnCounterClockwise(Location currentLoc, Direction currentDir){
         Location targetLoc = currentLoc.getDirectionalLoc(currentDir.getCounterClockwise());
-        return grid[targetLoc.getY()][targetLoc.getX()] == '.' || grid[targetLoc.getY()][targetLoc.getX()] == 'E';
+        return grid[targetLoc.y()][targetLoc.x()] == '.' || grid[targetLoc.y()][targetLoc.x()] == 'E';
     }
     public boolean canMoveBackward(Location currentLoc, Direction currentDir){
         assert currentDir.getClockwise() != null;
         Location targetLoc = currentLoc.getDirectionalLoc(currentDir.getClockwise().getClockwise());
-        return grid[targetLoc.getY()][targetLoc.getX()] == '.' || grid[targetLoc.getY()][targetLoc.getX()] == 'E';
+        return grid[targetLoc.y()][targetLoc.x()] == '.' || grid[targetLoc.y()][targetLoc.x()] == 'E';
     }
     public boolean isDeadEnd(Location currentLoc, Direction currentDir){
         return !canMoveForward(currentLoc, currentDir) && !canTurn(currentLoc);
@@ -172,8 +172,8 @@ public class Maze {
         for (Direction d : Direction.getCardinalDirections()){
             Location left = loc.getDirectionalLoc(d);
             Location up = loc.getDirectionalLoc(d.getClockwise());
-            if ((grid[up.getY()][up.getX()] == '.' || grid[up.getY()][up.getX()] == '@')
-                    && (grid[left.getY()][left.getX()] == '.' || grid[left.getY()][left.getX()] == '@')) return true;
+            if ((grid[up.y()][up.x()] == '.' || grid[up.y()][up.x()] == '@')
+                    && (grid[left.y()][left.x()] == '.' || grid[left.y()][left.x()] == '@')) return true;
         }
         return false;
     }
@@ -227,7 +227,7 @@ public class Maze {
                 ArrayList<Location> list = getAllLocationsBetween(current.getLoc(), parent.getLoc());
                 set.addAll(list);
                 for (Location l : list){
-                    grid[l.getY()][l.getX()] = 'O';
+                    grid[l.y()][l.x()] = 'O';
                 }
                 backtrack(parent, current, set);
             }
@@ -255,13 +255,13 @@ public class Maze {
         return output;
     }
     public boolean canAccess(MazeNode one, MazeNode two){
-        if ((!(one.getLoc().getX() == two.getLoc().getX() || one.getLoc().getY() == two.getLoc().getY())) || (one.getLoc().equals(two.getLoc()))) return false;
+        if ((!(one.getLoc().x() == two.getLoc().x() || one.getLoc().y() == two.getLoc().y())) || (one.getLoc().equals(two.getLoc()))) return false;
         Location loc = one.getLoc();
         Direction dir = getDirectionToGo(two.getLoc(), one.getLoc());
         dir = dir.getFlipped();
         while (!loc.equals(two.getLoc())){
             loc = loc.getDirectionalLoc(dir);
-            if (grid[loc.getY()][loc.getX()] == '#'){
+            if (grid[loc.y()][loc.x()] == '#'){
                 return false;
             }
         }
@@ -283,8 +283,8 @@ public class Maze {
         for (Direction d : Direction.getCardinalDirections()){
             Location left = loc.getDirectionalLoc(d);
             Location up = loc.getDirectionalLoc(d.getClockwise());
-            if (((grid[up.getY()][up.getX()] == '.' || grid[up.getY()][up.getX()] == 'x' || grid[up.getY()][up.getX()] == 'O'))
-                    && (grid[left.getY()][left.getX()] == '.' || grid[left.getY()][left.getX()] == 'x' || grid[left.getY()][left.getX()] == 'O')) return true;
+            if (((grid[up.y()][up.x()] == '.' || grid[up.y()][up.x()] == 'x' || grid[up.y()][up.x()] == 'O'))
+                    && (grid[left.y()][left.x()] == '.' || grid[left.y()][left.x()] == 'x' || grid[left.y()][left.x()] == 'O')) return true;
         }
         return false;
     }

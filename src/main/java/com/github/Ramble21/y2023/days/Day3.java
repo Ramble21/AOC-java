@@ -60,31 +60,31 @@ public class Day3 extends DaySolver {
         return sum;
     }
     public long getFullNum(Location l) {
-        int start = l.getX();
-        while (new Location(start, l.getY()).isOnGrid(grid) && Character.isDigit(grid[l.getY()][start])){
+        int start = l.x();
+        while (new Location(start, l.y()).isOnGrid(grid) && Character.isDigit(grid[l.y()][start])){
             start--;
         }
         start++;
-        int end = l.getX();
-        while (new Location(end, l.getY()).isOnGrid(grid) && Character.isDigit(grid[l.getY()][end])){
+        int end = l.x();
+        while (new Location(end, l.y()).isOnGrid(grid) && Character.isDigit(grid[l.y()][end])){
             end++;
         }
         end--;
-        return parseCharArr(l.getY(), start, end);
+        return parseCharArr(l.y(), start, end);
     }
     public ArrayList<Location> getAdjacentPartNumbers(Location gear) {
         ArrayList<Location> locs = new ArrayList<>();
         for (Direction d : Direction.getAllDirections()){
             Location loc = gear.getDirectionalLoc(d);
             if (!loc.isOnGrid(grid)) continue;
-            if (Character.isDigit(grid[loc.getY()][loc.getX()])){
+            if (Character.isDigit(grid[loc.y()][loc.x()])){
                 locs.add(loc);
             }
         }
         for (int i = 0; i < locs.size(); i++){
             for (int j = 0; j < locs.size(); j++){
                 if (locs.get(i).equals(locs.get(j))) continue;
-                if (locs.get(i).getY() == locs.get(j).getY() && Math.abs(locs.get(i).getX() - locs.get(j).getX()) == 1){
+                if (locs.get(i).y() == locs.get(j).y() && Math.abs(locs.get(i).x() - locs.get(j).x()) == 1){
                     locs.remove(j);
                     if (i >= j) i--;
                     j--;

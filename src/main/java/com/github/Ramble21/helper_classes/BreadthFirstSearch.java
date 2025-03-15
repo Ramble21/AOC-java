@@ -40,7 +40,7 @@ public class BreadthFirstSearch {
 
         while (!queue.isEmpty()){
             Location current = queue.poll();
-            if (grid[current.getY()][current.getX()] == '.') grid[current.getY()][current.getX()] = 'x';
+            if (grid[current.y()][current.x()] == '.') grid[current.y()][current.x()] = 'x';
             if (current.equals(end)){
                 result = distances.get(current);
                 this.distances = distances;

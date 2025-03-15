@@ -79,15 +79,15 @@ public class Day15 extends DaySolver {
         }
 
         for (WideBox box : boxes){
-            sum += (100 * box.getY() + box.getIndex1().getX());
+            sum += (100 * box.getY() + box.getIndex1().x());
         }
         return sum;
     }
     public void moveRobotBigGrid(char direction, Location currentLoc){
         Direction dir = Direction.charToDir(direction);
         assert dir != null;
-        int currentX = currentLoc.getX();
-        int currentY = currentLoc.getY();
+        int currentX = currentLoc.x();
+        int currentY = currentLoc.y();
         int targetX = currentX + dir.getDeltaX();
         int targetY = currentY + dir.getDeltaY();
         Location targetLoc = new Location(targetX, targetY);
@@ -118,8 +118,8 @@ public class Day15 extends DaySolver {
         else if (direction == '<') deltaX = -1;
         else deltaX = 1;
 
-        int currentX = currentLoc.getX();
-        int currentY = currentLoc.getY();
+        int currentX = currentLoc.x();
+        int currentY = currentLoc.y();
         tryToMove(currentX, currentY, deltaX, deltaY);
     }
     public void tryToMove(int currentX, int currentY, int deltaX, int deltaY){
